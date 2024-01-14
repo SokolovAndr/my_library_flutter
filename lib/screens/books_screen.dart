@@ -12,6 +12,7 @@ class BooksScreen extends StatefulWidget {
 }
 
 class _BooksScreenState extends State<BooksScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,14 +29,17 @@ class _BooksScreenState extends State<BooksScreen> {
           },
           child: const Icon(Icons.add),
         ),
-        body: FutureBuilder<List<Book>?>(
+        body:
+        FutureBuilder<List<Book>?>(
           future: DatabaseHelper.getAllBooks(),
           builder: (context, AsyncSnapshot<List<Book>?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
+            }
+            else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
-            } else if (snapshot.hasData) {
+            }
+            else if (snapshot.hasData) {
               if (snapshot.data != null) {
                 return ListView.builder(
                   itemBuilder: (context, index) => BookWidget(
@@ -82,6 +86,8 @@ class _BooksScreenState extends State<BooksScreen> {
                   itemCount: snapshot.data!.length,
                 );
               }
+            }
+            else {
               return const Center(
                 child: Text('Список книг пуст'),
               );

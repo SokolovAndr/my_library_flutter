@@ -40,7 +40,7 @@ class BookWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: Alignment.center,
+                        alignment: Alignment.topLeft,
                         child: Text(
                           book.title,
                           style: const TextStyle(

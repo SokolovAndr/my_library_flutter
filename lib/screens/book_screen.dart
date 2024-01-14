@@ -47,6 +47,7 @@ class BookScreen extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 30.0),
               child: TextFormField(
                 controller: titleController,
+                textCapitalization: TextCapitalization.sentences,  //текст с заглавной буквы
                 maxLines: 1,
                 decoration: const InputDecoration(
                     hintText: 'Название',
@@ -63,6 +64,7 @@ class BookScreen extends StatelessWidget {
             ),
             TextFormField(
               controller: descriptionController,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                   hintText: 'Описание',
                   labelText: 'Описание книги',

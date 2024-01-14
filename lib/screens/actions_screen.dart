@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class AuthorsScreen extends StatelessWidget {
-  const AuthorsScreen({super.key});
+class ActionsScreen extends StatelessWidget {
+  const ActionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
         child: Text(
-          "Авторы",
+          "Операции",
           style: TextStyle(fontSize: 40),
         ),
       ),

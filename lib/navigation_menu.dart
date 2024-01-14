@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_library_flutter/screens/actions_screen.dart';
 import 'package:my_library_flutter/screens/authors_screen.dart';
 import 'package:my_library_flutter/screens/books_screen.dart';
 import 'package:my_library_flutter/screens/readers_screen.dart';
@@ -17,6 +18,7 @@ class _NavMenuState extends State<NavMenu>{
     BooksScreen(),
     AuthorsScreen(),
     ReadersScreen(),
+    ActionsScreen()
   ];
 
   @override build(BuildContext context) {
@@ -42,16 +44,17 @@ class _NavMenuState extends State<NavMenu>{
               selectedItemColor: Colors.redAccent,
               unselectedItemColor: Colors.black,
               currentIndex: myCurrentIndex,
+              showUnselectedLabels: true,
               onTap: (index) {
                 setState(() {
                   myCurrentIndex = index;
                 });
               },
               items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.book), label: "Книги"),
-                BottomNavigationBarItem(icon: Icon(Icons.book), label: "Писатели"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person), label: "Читатели"),
+                BottomNavigationBarItem(icon: Icon(Icons.library_books), label: "Книги"),
+                BottomNavigationBarItem(icon: Icon(Icons.create), label: "Авторы"),
+                BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined), label: "Читатели"),
+                BottomNavigationBarItem(icon: Icon(Icons.change_circle_outlined), label: "Операции"),
               ],
             ),
           ),
