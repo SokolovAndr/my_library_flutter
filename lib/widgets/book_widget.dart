@@ -18,7 +18,7 @@ class BookWidget extends StatelessWidget {
       onLongPress: onLongPress,
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6),
         child: Card(
           elevation: 2,
           child: Padding(
@@ -30,7 +30,7 @@ class BookWidget extends StatelessWidget {
                   height: 150,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage('https://img3.labirint.ru/rc/1927058a57537edd854803f93079075d/363x561q80/books67/668307/cover.jpg?1618673120'),
+                      image: NetworkImage(book.image),
                     ),
                   )
                 ),
@@ -56,7 +56,8 @@ class BookWidget extends StatelessWidget {
                       Text(book.description,
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w400),
-                      maxLines: 3,)
+                      //maxLines: 3,
+                      )
                     ],
                   ),
                 ),

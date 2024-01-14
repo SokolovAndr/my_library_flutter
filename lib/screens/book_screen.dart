@@ -13,10 +13,12 @@ class BookScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleController = TextEditingController();
     final descriptionController = TextEditingController();
+    final imageController = TextEditingController();
 
     if(book != null){
       titleController.text = book!.title;
       descriptionController.text = book!.description;
+      imageController.text = book!.image;
     }
 
     return Scaffold(
@@ -33,7 +35,7 @@ class BookScreen extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.only(bottom: 40),
+              padding: EdgeInsets.only(bottom: 30),
               child: Center(
                 child: Text(
                   'Внесите данные',
@@ -42,7 +44,7 @@ class BookScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
+              padding: const EdgeInsets.only(bottom: 30.0),
               child: TextFormField(
                 controller: titleController,
                 maxLines: 1,
@@ -74,7 +76,28 @@ class BookScreen extends StatelessWidget {
                       ))),
               keyboardType: TextInputType.multiline,
               onChanged: (str) {},
-              maxLines: 5,
+              //maxLines: 5,
+              maxLines: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 30.0),
+              child: TextFormField(
+                controller: imageController,
+                decoration: const InputDecoration(
+                    hintText: 'Изображение',
+                    labelText: 'Изображение книги',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 0.75,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ))),
+                keyboardType: TextInputType.multiline,
+                onChanged: (str) {},
+                //maxLines: 5,
+              ),
             ),
             const Spacer(),
             Padding(
@@ -86,12 +109,13 @@ class BookScreen extends StatelessWidget {
                     onPressed: () async {
                       final title = titleController.value.text;
                       final description = descriptionController.value.text;
+                      final image = imageController.value.text;
 
-                      if (title.isEmpty || description.isEmpty) {
+                      if (title.isEmpty || description.isEmpty || image.isEmpty) {
                         return;
                       }
 
-                      final Book model = Book(title: title, description: description, id: book?.id);
+                      final Book model = Book(title: title, description: description, image: image, id: book?.id);
                       if(book == null){
                         await DatabaseHelper.addBook(model);
                       }else{
