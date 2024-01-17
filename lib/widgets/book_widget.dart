@@ -7,9 +7,9 @@ class BookWidget extends StatelessWidget {
   final VoidCallback onLongPress;
   const BookWidget(
       {Key? key,
-        required this.book,
-        required this.onTap,
-        required this.onLongPress})
+      required this.book,
+      required this.onTap,
+      required this.onLongPress})
       : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class BookWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: Row(
               children: [
-                Container(
+                /*Container(
                   width: 100,
                   height: 150,
                   decoration: BoxDecoration(
@@ -33,9 +33,39 @@ class BookWidget extends StatelessWidget {
                       image: NetworkImage(book.image),
                     ),
                   )
+                ),*/
+                SizedBox(
+                  width: 100,
+                  height: 150,
+                  child: Image.network(
+                    book.image,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return const Center(
+                          child: Text(
+                        'Мы не смогли загрузить изображение :(',
+                        style: TextStyle(fontSize: 12),
+                            textAlign: TextAlign.center,
+                      ));
+                    },
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                SizedBox(width: 25),
-                Expanded (
+                const SizedBox(width: 25),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -48,15 +78,17 @@ class BookWidget extends StatelessWidget {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                         child: Divider(
                           thickness: 1,
                         ),
                       ),
-                      Text(book.description,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400),
-                      //maxLines: 3,
+                      Text(
+                        book.description,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                        //maxLines: 3,
                       )
                     ],
                   ),
