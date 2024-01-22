@@ -41,12 +41,15 @@ class BookWidget extends StatelessWidget {
                     book.image,
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
-                      return const Center(
-                          child: Text(
+                      return Center(
+                          child:
+                          /*Text(
                         'Мы не смогли загрузить изображение :(',
                         style: TextStyle(fontSize: 12),
                             textAlign: TextAlign.center,
-                      ));
+                      ),*/
+                        Image.asset("assets/images/error_icon.png", width: 50,height: 50,),
+                      );
                     },
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent? loadingProgress) {

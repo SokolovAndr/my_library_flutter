@@ -1,5 +1,7 @@
+import 'package:my_library_flutter/models/author_model.dart';
 import 'package:my_library_flutter/models/book_model.dart';
 import 'package:my_library_flutter/models/genre_model.dart';
+import 'package:my_library_flutter/models/reader_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,6 +17,12 @@ class DatabaseHelper {
           );
           await db.execute(
               "CREATE TABLE Genre(id INTEGER PRIMARY KEY, name TEXT NOT NULL)"
+          );
+          await db.execute(
+              "CREATE TABLE Author(id INTEGER PRIMARY KEY, name TEXT NOT NULL, surname TEXT NOT NULL)"
+          );
+          await db.execute(
+              "CREATE TABLE Reader(id INTEGER PRIMARY KEY, name TEXT NOT NULL, surname TEXT NOT NULL)"
           );
         },
         version: _version);
@@ -80,4 +88,66 @@ class DatabaseHelper {
     }
     return List.generate(maps.length, (index) => Genre.fromJson(maps[index]));
   }
+
+  static Future<int> addAuthor (Author author) async {
+    final db = await _getDB();
+    return await db.insert("Author", author.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> updateAuthor(Author author) async {
+    final db = await _getDB();
+    return await db.update("Author", author.toJson(),
+        where: 'id = ?',
+        whereArgs: [author.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> deleteAuthor(Author author) async {
+    final db = await _getDB();
+    return await db.delete("Author",
+        where: 'id = ?',
+        whereArgs: [author.id]);
+  }
+
+  static Future<List<Author>?> getAllAuthors() async {
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query("Author");
+    if(maps.isEmpty) {
+      return null;
+    }
+    return List.generate(maps.length, (index) => Author.fromJson(maps[index]));
+  }
+
+  static Future<int> addReader (Reader reader) async {
+    final db = await _getDB();
+    return await db.insert("Reader", reader.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> updateReader(Reader reader) async {
+    final db = await _getDB();
+    return await db.update("Reader", reader.toJson(),
+        where: 'id = ?',
+        whereArgs: [reader.id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  static Future<int> deleteReader(Reader reader) async {
+    final db = await _getDB();
+    return await db.delete("Reader",
+        where: 'id = ?',
+        whereArgs: [reader.id]);
+  }
+
+  static Future<List<Reader>?> getAllReaders() async {
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query("Reader");
+    if(maps.isEmpty) {
+      return null;
+    }
+    return List.generate(maps.length, (index) => Reader.fromJson(maps[index]));
+  }
+
+
 }
