@@ -7,9 +7,9 @@ class BookWidget extends StatelessWidget {
   final VoidCallback onLongPress;
   const BookWidget(
       {Key? key,
-      required this.book,
-      required this.onTap,
-      required this.onLongPress})
+        required this.book,
+        required this.onTap,
+        required this.onLongPress})
       : super(key: key);
 
   @override
@@ -42,8 +42,8 @@ class BookWidget extends StatelessWidget {
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
                       return Center(
-                          child:
-                          /*Text(
+                        child:
+                        /*Text(
                         'Мы не смогли загрузить изображение :(',
                         style: TextStyle(fontSize: 12),
                             textAlign: TextAlign.center,
@@ -60,7 +60,7 @@ class BookWidget extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
+                              loadingProgress.expectedTotalBytes!
                               : null,
                         ),
                       );
@@ -82,13 +82,26 @@ class BookWidget extends StatelessWidget {
                       ),
                       const Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                         child: Divider(
                           thickness: 1,
                         ),
                       ),
                       Text(
                         book.description,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
+                        //maxLines: 3,
+                      ),
+                      const Padding(
+                        padding:
+                        EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                        child: Divider(
+                          thickness: 1,
+                        ),
+                      ),
+                      Text(
+                        book.authorId.toString(),
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w400),
                         //maxLines: 3,

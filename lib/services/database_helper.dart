@@ -1,5 +1,6 @@
 import 'package:my_library_flutter/models/author_model.dart';
 import 'package:my_library_flutter/models/book_model.dart';
+import 'package:my_library_flutter/models/book_model_new.dart';
 import 'package:my_library_flutter/models/genre_model.dart';
 import 'package:my_library_flutter/models/reader_model.dart';
 import 'package:path/path.dart';
@@ -13,7 +14,7 @@ class DatabaseHelper {
     return openDatabase(join(await getDatabasesPath(), _dbName),
         onCreate: (db, version) async {
           await db.execute(
-              "CREATE TABLE Book(id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL, image TEXT NOT NULL)"
+              "CREATE TABLE Book(id INTEGER PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL, image TEXT NOT NULL, authorId INTEGER NOT NULL, FOREIGN KEY(authorId) REFERENCES Author(id))"
           );
           await db.execute(
               "CREATE TABLE Genre(id INTEGER PRIMARY KEY, name TEXT NOT NULL)"
@@ -56,6 +57,15 @@ class DatabaseHelper {
       return null;
     }
     return List.generate(maps.length, (index) => Book.fromJson(maps[index]));
+  }
+
+  static Future<List<NewBook>?> getAllNewBooks() async {
+    final db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT Book.id, Book.title, Book.description, Book.image, Author.name AS author FROM Book JOIN Author ON Book.authorId = Author.id");
+    if (maps.isEmpty) {
+      return null;
+    }
+    return List.generate(maps.length, (index) => NewBook.fromJson(maps[index]));
   }
 
   static Future<int> addGenre (Genre genre) async {
@@ -118,6 +128,14 @@ class DatabaseHelper {
     }
     return List.generate(maps.length, (index) => Author.fromJson(maps[index]));
   }
+
+  /*static Future<Author?> getAuthorName(int id) async {
+    final db = await _getDB();
+    final res = await db.query("SELECT name from AUTHOR WHERE id = ?", where: 'id = ?',
+        whereArgs: [id]);
+    return Author.fromJson(res.first);
+  }*/
+
 
   static Future<int> addReader (Reader reader) async {
     final db = await _getDB();
